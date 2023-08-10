@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import Button from './Button';
 
 const Hero = () => {
@@ -18,6 +19,12 @@ const Hero = () => {
           style="bg-primary-blue text-white rounded-full mt-10"
           handleClick={clickHandler}
         />
+      </div>
+      <div className="xl:flex-[1.5] flex justify-end items-end w-full xl:h-screen">
+        <div className="relative xl:w-full w-[90%] xl:h-full h-[590px] z-0 drop-shadow-[0_25px_5px_rgba(0,0,0,0.25)]">
+          <Image src={'/hero.png'} alt="hero" fill className="object-contain" />
+        </div>
+        <div className="absolute xl:-top-24 xl:-right-1/2 -right-[5%] bg-hero-bg bg-repeat-round -z-10 w-full xl:h-screen h-[590px] overflow-hidden" />
       </div>
     </div>
   );
