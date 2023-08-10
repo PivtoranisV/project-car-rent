@@ -1,6 +1,8 @@
-import React from 'react';
+'use client';
+import Button from './Button';
 
 const Hero = () => {
+  const clickHandler = () => {};
   return (
     <div className="flex xl:flex-row flex-col gap-5 relative z-0 max-w-[1440px] mx-auto">
       <div className="sm:px-16 px-6 flex-1 pt-36">
@@ -11,6 +13,11 @@ const Hero = () => {
           Drive premium, pay economy. Get affordable access to a wide selection
           of premium car rentals.
         </p>
+        <Button
+          title="Explore Cars"
+          style="bg-primary-blue text-white rounded-full mt-10"
+          handleClick={clickHandler}
+        />
       </div>
     </div>
   );
