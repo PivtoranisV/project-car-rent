@@ -1,12 +1,13 @@
 import Filter from '@/components/Filter';
 import Hero from '@/components/Hero';
 import Search from '@/components/Search';
+import CarCard from '@/components/CarCard';
 import { fetchCars } from '@/utils';
 
 export default async function Home() {
   const cars = await fetchCars();
-
   console.log(cars);
+  const isDataEmpty = !Array.isArray(cars) || cars.length < 1 || !cars;
 
   return (
     <main>
@@ -23,6 +24,20 @@ export default async function Home() {
           <Filter />
           <Filter />
         </div>
+        {!isDataEmpty ? (
+          <section>
+            <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 w-full gap-8 pt-14">
+              {cars?.map((car) => (
+                <CarCard car={car} />
+              ))}
+            </div>
+          </section>
+        ) : (
+          <div className="mt-16 flex justify-center items-center flex-col gap-2">
+            <h2 className="text-black text-xl font-bold">Opps, no results</h2>
+            <p>{cars?.message}</p>
+          </div>
+        )}
       </div>
     </main>
   );
