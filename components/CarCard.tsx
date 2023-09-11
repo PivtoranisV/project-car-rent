@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { CarsProps } from '@/types';
 import Button from './Button';
+import CarDetails from './CarDetails';
 import { PiSteeringWheelDuotone } from 'react-icons/pi';
 import { GiCarWheel } from 'react-icons/gi';
 import { BsFillFuelPumpFill } from 'react-icons/bs';
@@ -12,8 +13,7 @@ interface CarCardsProps {
 }
 
 const CarCard = ({ car }: CarCardsProps) => {
-  const { make, model, year, combination_mpg, fuel_type, transmission, drive } =
-    car;
+  const { make, model, combination_mpg, transmission, drive } = car;
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -68,6 +68,11 @@ const CarCard = ({ car }: CarCardsProps) => {
           />
         </div>
       </div>
+      <CarDetails
+        isOpen={isOpen}
+        closeModal={() => setIsOpen(false)}
+        car={car}
+      />
     </div>
   );
 };
