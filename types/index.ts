@@ -4,6 +4,7 @@ export interface ButtonProps {
   title: string;
   style?: string;
   handleClick?: MouseEventHandler<HTMLButtonElement>;
+  textStyle?: string;
 }
 
 export interface SearchMakeProps {

@@ -2,7 +2,7 @@
 
 import { ButtonProps } from '@/types';
 
-const Button = ({ title, handleClick, style }: ButtonProps) => {
+const Button = ({ title, handleClick, style, textStyle }: ButtonProps) => {
   return (
     <button
       disabled={false}
@@ -10,7 +10,7 @@ const Button = ({ title, handleClick, style }: ButtonProps) => {
       onClick={handleClick}
       className={`flex flex-row relative justify-center items-center py-3 px-6 outline-none ${style}`}
     >
-      <span className={`flex-1`}>{title}</span>
+      <span className={`flex-1 ${textStyle}`}>{title}</span>
     </button>
   );
 };
