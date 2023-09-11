@@ -13,6 +13,7 @@ const SearchMake = ({ make, setMake }: SearchMakeProps) => {
     query === ''
       ? cars
       : cars.filter((car) => car.toLowerCase().includes(query.toLowerCase()));
+
   return (
     <div className="flex-1 max-sm:w-full flex justify-start items-center">
       <Combobox value={make} onChange={setMake}>
@@ -22,7 +23,7 @@ const SearchMake = ({ make, setMake }: SearchMakeProps) => {
           </Combobox.Button>
           <Combobox.Input
             className="w-full h-[48px] pl-12 p-4 rounded-l-full max-sm:rounded-full bg-light-white outline-none cursor-pointer text-sm"
-            placeholder="Mazda"
+            placeholder="Choose Brand"
             displayValue={(make: string) => make}
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -33,7 +34,10 @@ const SearchMake = ({ make, setMake }: SearchMakeProps) => {
             leaveTo="opacity-0"
             afterLeave={() => setQuery('')}
           >
-            <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <Combobox.Options
+              className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+              static
+            >
               {filteredCars.length === 0 && query !== '' ? (
                 <Combobox.Option
                   className="cursor-default select-none py-2 pl-10 pr-4"

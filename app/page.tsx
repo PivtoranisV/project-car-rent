@@ -1,10 +1,15 @@
 import Filter from '@/components/Filter';
 import Hero from '@/components/Hero';
 import Search from '@/components/Search';
+import { fetchCars } from '@/utils';
 
-export default function Home() {
+export default async function Home() {
+  const cars = await fetchCars();
+
+  console.log(cars);
+
   return (
-    <main className="overflow-hidden">
+    <main>
       <Hero />
       <div className="mt-12 sm:px-16 px-6 py-4" id="catalogue">
         <div className="flex flex-col items-start justify-start gap-y-2.5 text-black-100">
