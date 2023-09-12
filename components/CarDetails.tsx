@@ -1,10 +1,11 @@
 'use client';
 import Image from 'next/image';
-import { Fragment } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { Transition, Dialog } from '@headlessui/react';
-import { CarsProps } from '@/types';
+import { CarsProps, CarImageType } from '@/types';
 
 import { AiOutlineClose } from 'react-icons/ai';
+import { getCarImage } from '@/utils';
 
 interface CarDetailsProps {
   isOpen: boolean;
@@ -13,6 +14,20 @@ interface CarDetailsProps {
 }
 
 const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
+  const [carImages, setCarImages] = useState<CarImageType[]>([]);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const data = await getCarImage(car, 2, 4);
+        setCarImages(data.results);
+      } catch (error) {
+        console.error('Error fetching car image:', error);
+      }
+    };
+    fetchImages();
+  }, [car]);
+
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -48,41 +63,43 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                     <AiOutlineClose />
                   </button>
                   <div className="flex-1 flex flex-col gap-3">
-                    <div className="relative w-full h-40 bg-pattern bg-cover bg-center rounded-lg">
-                      <Image
-                        src={'/hero.png'}
-                        alt={car.make}
-                        fill
-                        priority
-                        className="object-contain"
-                      />
+                    <div className="relative w-full h-40 rounded-lg">
+                      {carImages && (
+                        <Image
+                          src={carImages[0]?.urls?.regular}
+                          alt={car.make}
+                          fill
+                          priority
+                          className="object-cover"
+                        />
+                      )}
                     </div>
                     <div className="flex gap-3">
                       <div className="relative h-24 flex-1 bg-primary-blue-100 rounded-lg">
                         <Image
-                          src={'/hero.png'}
+                          src={carImages[3]?.urls?.regular}
                           alt={car.make}
                           fill
                           priority
-                          className="object-contain"
+                          className="object-cover"
                         />
                       </div>
                       <div className="relative h-24 flex-1 bg-primary-blue-100 rounded-lg">
                         <Image
-                          src={'/hero.png'}
+                          src={carImages[1]?.urls?.regular}
                           alt={car.make}
                           fill
                           priority
-                          className="object-contain"
+                          className="object-cover"
                         />
                       </div>
                       <div className="relative h-24 flex-1 bg-primary-blue-100 rounded-lg">
                         <Image
-                          src={'/hero.png'}
+                          src={carImages[2]?.urls?.regular}
                           alt={car.make}
                           fill
                           priority
-                          className="object-contain"
+                          className="object-cover"
                         />
                       </div>
                     </div>

@@ -26,3 +26,9 @@ export interface CarsProps {
   transmission: string;
   year: number;
 }
+
+export interface CarImageType {
+  urls: {
+    regular: string;
+  };
+}

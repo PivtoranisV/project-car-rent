@@ -1,12 +1,13 @@
 'use client';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CarsProps } from '@/types';
 import Button from './Button';
 import CarDetails from './CarDetails';
 import { PiSteeringWheelDuotone } from 'react-icons/pi';
 import { GiCarWheel } from 'react-icons/gi';
 import { BsFillFuelPumpFill } from 'react-icons/bs';
+import { getCarImage } from '@/utils';
 
 interface CarCardsProps {
   car: CarsProps;
@@ -16,6 +17,22 @@ const CarCard = ({ car }: CarCardsProps) => {
   const { make, model, combination_mpg, transmission, drive } = car;
 
   const [isOpen, setIsOpen] = useState(false);
+  const [carImage, setCarImage] = useState(null);
+
+  useEffect(() => {
+    const fetchCarImage = async () => {
+      try {
+        const data = await getCarImage(car, 1, 1);
+        const image = data.results[0]?.urls?.regular;
+        if (image) {
+          setCarImage(image);
+        }
+      } catch (error) {
+        console.error('Error fetching car image:', error);
+      }
+    };
+    fetchCarImage();
+  }, [car]);
 
   return (
     <div className="group flex flex-col p-6 justify-center items-start text-black-100 bg-primary-blue-100 hover:bg-white hover:shadow-md rounded-3xl">
@@ -34,13 +51,15 @@ const CarCard = ({ car }: CarCardsProps) => {
         </span>
       </p>
       <div className="relative w-full h-40 my-3 object-contain">
-        <Image
-          src={'/hero.png'}
-          alt={make}
-          fill
-          priority
-          className="object-contain"
-        />
+        {carImage && (
+          <Image
+            src={carImage}
+            alt={make}
+            fill
+            priority
+            className="object-contain"
+          />
+        )}
       </div>
       <div className="relative flex w-full mt-2">
         <div className="flex group-hover:invisible w-full justify-between text-grey">
